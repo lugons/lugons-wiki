@@ -33,7 +33,7 @@ def submit_edit(request):
 		f.close()
 		subprocess.call(['git', 'commit', '-a', '-m', "Some commit"])
 	
-		args = ['git', 'format-patch']
+		args = ['git', 'format-patch', 'origin/master', '--stdout']
 		git = subprocess.Popen(args, cwd='/tmp/temp-repo', 
 					stdout=subprocess.PIPE, 
 					stderr=subprocess.PIPE)
