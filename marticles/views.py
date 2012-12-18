@@ -30,6 +30,7 @@ def submit_edit(request):
 		subprocess.call(['git', 'clone', '/home/nikola/sajt/lugons-wiki', '/tmp/temp-repo'])
 		f = open('/tmp/temp-repo/the_repo/lugons.md', 'w')
 		f.write(str(request.GET['q']))
+		f.close()
 		subprocess.call(['git', 'commit', '-a', '-m', "Some commit"])
 	
 		args = ['git', 'format-patch']
