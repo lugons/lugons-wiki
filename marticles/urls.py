@@ -1,5 +1,5 @@
 from django.conf.urls import include, patterns, url
-from views import hello, edit
+from views import hello, edit, submit_edit
 
 urlpatterns = patterns('',
     # Examples:
@@ -12,5 +12,6 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^edit/(?P<filename>.*)/$', edit),
+    url(r'^submit-edit/', submit_edit),
     url(r'^(?P<filename>.*)/', hello),
 )

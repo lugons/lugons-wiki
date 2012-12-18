@@ -1,8 +1,9 @@
 <html>
 
 <body>
-
-{{ form.contents }}
-
+<form action="/submit-edit/" method="get">
+	<textarea name="q" rows=20 cols=70>{{ stuff }}</textarea> <br>
+	<input type="submit" value="Submit">
+</form>
 </body>
 </html>

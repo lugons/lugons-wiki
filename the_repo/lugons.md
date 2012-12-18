@@ -3,3 +3,4 @@
 - jedan
 - dva
 - tri
+- četiri
