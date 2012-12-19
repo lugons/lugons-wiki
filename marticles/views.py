@@ -23,7 +23,7 @@ def edit(request, filename):
 		return render_to_response('hello.html', {'stuff' : "#fajl ne posoji"})
 	string = f.read()
 	f.close()
-	return render_to_response('editor.html',{'stuff':string} )
+	return render_to_response('editor.html',{'stuff':string},  context_instance=RequestContext(request) )
 
 def submit_edit(request):
 	c = RequestContext(request)
@@ -31,7 +31,7 @@ def submit_edit(request):
 	subprocess.call(['rm', '-rf', '/tmp/temp-repo'])
 	subprocess.call(['git', 'clone', '/home/nikola/sajt/lugons-wiki', '/tmp/temp-repo'])
 	f = open('/tmp/temp-repo/the_repo/lugons.md', 'w')
-	f.write(c)
+	f.write(request.POST.get('q').encode('UTF-8'))
 	f.close()
 
 	args = ['git', 'commit', '-a', '-m', "Some commit"]
@@ -47,4 +47,4 @@ def submit_edit(request):
 	(out, err) = git.communicate()
 	subprocess.call(['rm', '-rf', '/tmp/temp-repo'])
 
-	return HttpResponse("<html><body><pre>"+out+"</pre></body></html>")
+	return render_to_response('patch.html', {'patch':out}) 
