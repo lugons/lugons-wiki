@@ -1,7 +1,8 @@
 <html>
 
 <body>
-<form action="/submit-edit/" method="get">
+<form action="/submit-edit/" method="POST">
+{% csrf_token %}
 	<textarea name="q" rows=20 cols=70>{{ stuff }}</textarea> <br>
 	<input type="submit" value="Submit">
 </form>
