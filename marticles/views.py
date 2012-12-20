@@ -61,5 +61,8 @@ def make_patch(filename, data):
 				stderr=subprocess.PIPE)
 	(out, err) = git.communicate()
 
+	#Remove temp repo
+	subprocess.call(['rm', '-rf', '/tmp/temp-repo'])
+
 	return out
 
