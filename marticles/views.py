@@ -10,6 +10,12 @@ repo = 'the_repo/'
 
 class EditForm(forms.Form):
 	text = forms.CharField(widget=forms.Textarea)
+	CHOICES = [('commit', 'Commit change'),
+		   ('make patch', 'Generate the patch')]
+
+	radio = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(attrs={"onchange":"details()" }))
+	mail = forms.CharField()
+	user = forms.CharField()
 
 def hello(request, filename):
 	try:
@@ -30,11 +36,11 @@ def edit(request, filename):
 
 	if request.method == 'POST':
 		form = EditForm(request.POST)
-		form.is_valid()
-		out = make_patch(filename, form.clean()['text'])
-		return render_to_response('patch.html', {'patch':out}) 
+		if(form.is_valid()):
+			out = make_patch(filename, form.clean()['text'])
+			return render_to_response('patch.html', {'patch':out}) 
 	else:
-		form = EditForm({'text':string},request.POST)
+		form = EditForm(initial={'text':string})
 
 	return render_to_response('editor.html',{'form':form}, context_instance=RequestContext(request))
 
