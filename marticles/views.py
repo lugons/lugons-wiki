@@ -17,6 +17,7 @@ class EditForm(forms.Form):
 	radio = forms.ChoiceField(choices=CHOICES, widget=forms.RadioSelect(attrs={"onchange":"details()" }))
 	mail = forms.CharField()
 	user = forms.CharField()
+	commit_msg = forms.CharField()
 
 def hello(request, filename):
 	try:
@@ -38,14 +39,17 @@ def edit(request, filename):
 	if request.method == 'POST':
 		form = EditForm(request.POST)
 		if(form.is_valid()):
-			out = make_patch(filename, form.clean()['text'])
+			out = make_patch(filename, form.clean()['text'],
+					 mail=form.clean()['mail'],
+					 user=form.clean()['user'],
+					 commit_msg=form.clean()['commit_msg'])
 			return render_to_response('patch.html', {'patch':out}) 
 	else:
 		form = EditForm(initial={'text':string})
 
 	return render_to_response('editor.html',{'form':form}, context_instance=RequestContext(request))
 
-def make_patch(filename, data):
+def make_patch(filename, data, user, mail, commit_msg):
 	#Generate random string
 	rs = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(8))
 	random_name='/tmp/temp-repo-'+rs
@@ -57,9 +61,10 @@ def make_patch(filename, data):
 	f = open(random_name+'/the_repo/'+filename+'.md', 'w')
 	f.write(data.replace('\r', '').encode('UTF-8'))
 	f.close()
+	author = "--author=" + user + " <" + mail + ">"
 
 	#Commit edit
-	args = ['git', 'commit', '-a', '-m', "Some commit"]
+	args = ['git', 'commit', author, '-a', '-m', commit_msg]
 	git = subprocess.Popen(args, cwd=random_name, 
 				stdout=subprocess.PIPE, 
 				stderr=subprocess.PIPE)
