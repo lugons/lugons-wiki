@@ -5,6 +5,8 @@ A git based wiki.
 # Start it:
 
 ./manage.py runserver [port]
+./manage.py syncdb
+
 
 # Dependencies
 
@@ -21,3 +23,4 @@ The project is written in Django 1.4.1 so it may not work in earlier versions. I
 ## Django markdown template filter
 
 We are (still) using "django.contrib.markup" for markdown-to-html conversion and you need python-markdown to get that working.
+
