@@ -45,7 +45,12 @@ def edit(request, filename):
 					 commit_msg=form.clean()['commit_msg'])
 			return render_to_response('patch.html', {'patch':out}) 
 	else:
-		form = EditForm(initial={'text':string})
+		if request.user.is_authenticated():
+			form = EditForm(initial={'text':string, 
+						 'user':request.user.username,
+						 'mail':request.user.email})
+		else:
+			form = EditForm(initial={'text':string})
 
 	return render_to_response('editor.html',{'form':form}, context_instance=RequestContext(request))
 

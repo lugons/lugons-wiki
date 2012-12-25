@@ -1,5 +1,6 @@
 from django.conf.urls import patterns, include, url
 from marticles.views import hello
+import views
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
@@ -15,5 +16,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
+    url(r'^login/$', views.login_page),
+    url(r'^logout/$', views.logout_page),
     url(r'', include('marticles.urls')),
 )

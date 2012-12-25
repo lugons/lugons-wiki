@@ -1,6 +1,6 @@
 <html>
 <head>
-<script type="text/javascript" src="{{ STATIC_URL }}my_script.js"></script>
+<!--<script type="text/javascript" src="{{ STATIC_URL }}my_script.js"></script>-->
 
 <style media=screen type="text/css">
 ul {
@@ -14,10 +14,9 @@ ul {
 <form method="POST" action="">{% csrf_token %}
 <table>
 	<tr><td colspan=2>{{ form.text }}</td></tr>
-	<tr><td colspan=2>{{ form.radio }}</td></tr>
+	<!--<tr><td colspan=2>{{ form.radio }}</td></tr>-->
 
-	<!--<div id="details" hidden="true">-->
-	<table id="details" hidden="true">
+	<table id="details">
 	<tr><td>E-mail:</td> <td>{{ form.mail }} </td></tr>
 	<tr><td>User  :</td> <td>{{ form.user }} </td></tr>
 	<tr><td>Commit msg  :</td> <td>{{ form.commit_msg }} </td></tr>
@@ -26,7 +25,6 @@ ul {
 
 	<tr><td></td> <td><input type="submit" value="submit"/></td></tr>
 </table>
-
 </form>
 </body>
 </html>
