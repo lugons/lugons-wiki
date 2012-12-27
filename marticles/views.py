@@ -42,3 +42,16 @@ def edit(request, filename):
 			form = EditForm(initial={'text':string})
 
 	return render_to_response('editor.html',{'form':form}, context_instance=RequestContext(request))
+
+def new(request, filename):
+	if request.method == 'POST':
+		form = EditForm(request.POST)
+		if(form.is_valid()):
+			out = make_patch(filename, form.clean()['text'],
+				mail=form.clean()['mail'],
+				user=form.clean()['user'],
+				commit_msg=form.clean()['commit_msg'])
+			return render_to_response('patch.html', {'patch':out})
+	else:
+		form = EditForm()
+	return render_to_response('editor.html', {'form':form}, RequestContext(request))

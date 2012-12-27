@@ -1,3 +1,4 @@
 *.pyc
 *.swp
 lugons/settings.py
+*.db

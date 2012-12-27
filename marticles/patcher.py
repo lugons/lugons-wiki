@@ -12,8 +12,16 @@ def make_patch(filename, data, user, mail, commit_msg):
 
 	#Write new data into file
 	f = open(random_name+'/the_repo/'+filename+'.md', 'w')
+	print f.closed
 	f.write(data.replace('\r', '').encode('UTF-8'))
 	f.close()
+
+	#Add the file into repo in case it is new
+	args = ['git', 'add', random_name+'/the_repo/'+filename+'.md']
+	git  = subprocess.Popen(args, cwd=random_name,
+				stdout=subprocess.PIPE,
+				stderr=subprocess.PIPE)
+
 	author = "--author=" + user + " <" + mail + ">"
 
 	#Commit edit
