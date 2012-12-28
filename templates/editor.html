@@ -1,16 +1,6 @@
-<html>
-<head>
-<!--<script type="text/javascript" src="{{ STATIC_URL }}my_script.js"></script>-->
+{% extends "base.html" %}
 
-<style media=screen type="text/css">
-ul {
-	list-style-type:none;
-	margin-left:-30px;
-}
-</style>
-</head>
-<body>
-
+{% block main %}
 <form method="POST" action="">{% csrf_token %}
 <table>
 	<tr><td colspan=2>{{ form.text }}</td></tr>
@@ -26,5 +16,4 @@ ul {
 	<tr><td></td> <td><input type="submit" value="submit"/></td></tr>
 </table>
 </form>
-</body>
-</html>
+{% endblock %}

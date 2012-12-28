@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 
 {% block main %}
-	<h1>{{ msg }}</h1>
+	{% load markup %}
+	{{ stuff|markdown }}
 {% endblock %}

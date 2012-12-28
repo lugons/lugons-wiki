@@ -1,5 +1,5 @@
 from django.conf.urls import include, patterns, url
-from views import hello, edit, new
+import views
 
 urlpatterns = patterns('',
     # Examples:
@@ -11,7 +11,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^edit/(?P<filename>.*)/$', edit),
-    url(r'^new/(?P<filename>.*)/$', new),
-    url(r'^(?P<filename>.*)/$', hello),
+    url(r'^edit/(?P<filename>.*)/$', views.edit),
+    url(r'^new/(?P<filename>.*)/$', views.new),
+    url(r'^(?P<filename>.*)/$', views.article),
 )

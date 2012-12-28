@@ -8,14 +8,14 @@ from patcher import make_patch
 
 repo = 'the_repo/'
 
-def hello(request, filename):
+def article(request, filename):
 	try:
 		f = open(repo+filename+'.md')
 	except IOError as e:
 		return render_to_response('hello.html', {'stuff' : "#fajl ne posoji"})
 	string = f.read()
 	f.close()
-	return render_to_response('hello.html', { 'stuff' : string})
+	return render_to_response('article.html', { 'stuff' : string})
 
 def edit(request, filename):
 	try:
