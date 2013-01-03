@@ -5,4 +5,3 @@ class EditForm(forms.Form):
 	mail = forms.CharField()
 	user = forms.CharField()
 	commit_msg = forms.CharField()
-

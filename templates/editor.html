@@ -4,13 +4,11 @@
 <form method="POST" action="">{% csrf_token %}
 <table>
 	<tr><td colspan=2>{{ form.text }}</td></tr>
-	<!--<tr><td colspan=2>{{ form.radio }}</td></tr>-->
-
-	<table id="details">
+	
+	<table>
 	<tr><td>E-mail:</td> <td>{{ form.mail }} </td></tr>
 	<tr><td>User  :</td> <td>{{ form.user }} </td></tr>
 	<tr><td>Commit msg  :</td> <td>{{ form.commit_msg }} </td></tr>
-	</div>
 	</table>
 
 	<tr><td><input type="submit" name="submit"  value="patch"/></td> 

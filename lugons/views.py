@@ -37,5 +37,5 @@ def logout_page(request):
 		return render_to_response('logout.html', {"msg":"You are not logged in."})
 
 def index_page(request):
-	file_list = [i.strip(".md") for i in storage.listdir('.')[1]]
+	file_list = [i.rstrip(".md") for i in storage.listdir('.')[1]]
 	return render_to_response('index.html', {"files":file_list})

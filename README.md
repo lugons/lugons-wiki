@@ -15,6 +15,7 @@ A git based wiki.
 - django: 1.4.1
 - python markdown
 - git
+- django-nose
 
 ## Django version: 1.4.1
 
