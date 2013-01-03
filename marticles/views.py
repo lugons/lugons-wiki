@@ -5,12 +5,14 @@ from django.template import RequestContext
 from django.conf import settings
 from mforms import EditForm
 from patcher import make_patch, commit_edit
+from django.core.files.storage import FileSystemStorage
 
 repo = settings.REPO_ROOT
+storage = FileSystemStorage(location=repo)
 
 def article(request, filename):
 	try:
-		f = open(repo+filename+'.md')
+		f = storage.open(filename+'.md')
 	except IOError as e:
 		return render_to_response('article.html', {'stuff' : "#no such file"})
 	string = f.read()
@@ -19,7 +21,7 @@ def article(request, filename):
 
 def edit(request, filename):
 	try:
-		f = open(repo+filename+'.md')
+		f = storage.open(filename+'.md')
 	except IOError as e:
 		return render_to_response('article.html', {'stuff' : "#no such file"})
 	string = f.read()
