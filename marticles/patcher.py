@@ -5,19 +5,18 @@ import os, subprocess
 def make_patch(filename, data, user, mail, commit_msg):
 	#Generate random string
 	rs = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(8))
-	random_name='/tmp/temp-repo-'+rs
+	random_name='/tmp/temp-repo-'+rs+'/'
 
 	#Clean and clone repo
-	subprocess.call(['git', 'clone', settings.SITE_ROOT+'/..', random_name])
+	subprocess.call(['git', 'clone', settings.REPO_ROOT, random_name])
 
 	#Write new data into file
-	f = open(random_name+'/the_repo/'+filename+'.md', 'w')
-	print f.closed
+	f = open(random_name+filename+'.md', 'w')
 	f.write(data.replace('\r', '').encode('UTF-8'))
 	f.close()
 
 	#Add the file into repo in case it is new
-	args = ['git', 'add', random_name+'/the_repo/'+filename+'.md']
+	args = ['git', 'add', random_name+filename+'.md']
 	git  = subprocess.Popen(args, cwd=random_name,
 				stdout=subprocess.PIPE,
 				stderr=subprocess.PIPE)
@@ -41,3 +40,5 @@ def make_patch(filename, data, user, mail, commit_msg):
 	#Remove temp repo
 	subprocess.call(['rm', '-rf', random_name])
 	return out
+
+

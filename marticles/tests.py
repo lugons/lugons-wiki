@@ -13,7 +13,6 @@ class TestMarticles(object):
 		self.write_files()
 
 	def test_old_article_page(self):
-		self.setup()
 		response = self.client.get("/lugons/")
 		nt.assert_in('lugons site', response.content)
 
