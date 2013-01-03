@@ -2,43 +2,51 @@ import string, random
 from django.conf import settings
 import os, subprocess
 
-def make_patch(filename, data, user, mail, commit_msg):
-	#Generate random string
+def random_path():
 	rs = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(8))
-	random_name='/tmp/temp-repo-'+rs+'/'
+	random_path='/tmp/temp-repo-'+rs+'/'
+	return random_path
+	
+def clone_repo(repo1, repo2):
+	subprocess.call(['git', 'clone', '-q', repo1, repo2])
 
-	#Clean and clone repo
-	subprocess.call(['git', 'clone', settings.REPO_ROOT, random_name])
-
-	#Write new data into file
-	f = open(random_name+filename+'.md', 'w')
-	f.write(data.replace('\r', '').encode('UTF-8'))
+def write_data(temp_repo, the_file, data):
+	file_path = os.path.join(temp_repo, the_file+'.md')
+	f = open(file_path, "w")
+	data = data.replace('\r', '').encode('UTF-8')
+	f.write(data)
 	f.close()
 
-	#Add the file into repo in case it is new
-	args = ['git', 'add', random_name+filename+'.md']
-	git  = subprocess.Popen(args, cwd=random_name,
-				stdout=subprocess.PIPE,
+def call_command(args, temp_repo):
+	git = subprocess.Popen(args, cwd=temp_repo, 
+				stdout=subprocess.PIPE, 
 				stderr=subprocess.PIPE)
+	return git.communicate()
 
+def add_file_to_repo(temp_repo, filename):
+	args = ['git', 'add', temp_repo + filename + '.md']
+	call_command(args, temp_repo)
+
+def commit_change(temp_repo, user, mail, commit_msg):
 	author = "--author=" + user + " <" + mail + ">"
-
-	#Commit edit
 	args = ['git', 'commit', author, '-a', '-m', commit_msg]
-	git = subprocess.Popen(args, cwd=random_name, 
-				stdout=subprocess.PIPE, 
-				stderr=subprocess.PIPE)
-	(out, err) = git.communicate()
+	call_command(args, temp_repo)
 
-	#Create format patch
+def remove_repo(temp_repo):
+	subprocess.call(['rm', '-rf', temp_repo])
+	
+
+
+def make_patch(filename, data, user, mail, commit_msg):
+	temp_repo = random_path()
+	clone_repo(settings.REPO_ROOT, temp_repo)
+	write_data(temp_repo, filename, data)
+	add_file_to_repo(temp_repo, filename)
+	commit_change(temp_repo, user, mail, commit_msg)
+
 	args = ['git', 'format-patch', 'origin/master', '--stdout']
-	git = subprocess.Popen(args, cwd=random_name, 
-				stdout=subprocess.PIPE, 
-				stderr=subprocess.PIPE)
-	(out, err) = git.communicate()
+	(out, err) = call_command(args, temp_repo)
 
-	#Remove temp repo
-	subprocess.call(['rm', '-rf', random_name])
+	remove_repo(temp_repo)
 	return out
-
 
