@@ -5,6 +5,10 @@ from django.http import HttpResponse
 from django.template import RequestContext
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
+from django.core.files.storage import FileSystemStorage
+from django.conf import settings
+
+storage = FileSystemStorage(settings.REPO_ROOT)
 
 
 class LoginForm(forms.Form):
@@ -33,4 +37,5 @@ def logout_page(request):
 		return render_to_response('logout.html', {"msg":"You are not logged in."})
 
 def index_page(request):
-	return render_to_response('article.html', {'stuff':'The index page'})
+	file_list = [i.strip(".md") for i in storage.listdir('.')[1]]
+	return render_to_response('index.html', {"files":file_list})

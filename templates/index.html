@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main %}
+
+	<ul>
+	{% for i in files %}
+		<li><a href={{i}}>{{i}}</a>
+	{% endfor %}
+	</ul>
+{% endblock %}
