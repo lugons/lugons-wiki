@@ -4,3 +4,7 @@
 	{% load markup %}
 	{{ stuff|markdown }}
 {% endblock %}
+
+{% block menu %}
+	<a href={{edit_link}}>Edit</a>
+{% endblock %}

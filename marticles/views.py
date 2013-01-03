@@ -17,7 +17,7 @@ def article(request, filename):
 		return render_to_response('article.html', {'stuff' : "#no such file"})
 	string = f.read()
 	f.close()
-	return render_to_response('article.html', { 'stuff' : string})
+	return render_to_response('article.html', { 'stuff' : string, 'edit_link':'/edit'+request.path})
 
 def edit(request, filename):
 	try:

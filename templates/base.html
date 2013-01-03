@@ -1,8 +1,23 @@
 <html>
 
+<head><link rel="stylesheet" href="/static/css/style.css" /></head>
+
 <body>
-{% block main %}
-{% endblock %}
+	<div id=block>
+		<img src="/static/img/lugons_logo.png"></img>
+
+		<div id=menu>
+		<a href="/">Home</a>
+		<a href="/login/">Login</a>
+		<a href="/logout/">Logout</a>
+
+		{% block menu %}
+		{% endblock %}
+		</div>
+
+		{% block main %}
+		{% endblock %}
+	</div>
 </body>
 
 
