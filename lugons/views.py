@@ -31,3 +31,6 @@ def logout_page(request):
 		return render_to_response('logout.html', {"msg":"You are now logged out."})
 	else:
 		return render_to_response('logout.html', {"msg":"You are not logged in."})
+
+def index_page(request):
+	return render_to_response('article.html', {'stuff':'The index page'})

@@ -1,3 +1,0 @@
-# ehllo world
-
-[lugons](/lugons)
