@@ -34,8 +34,15 @@ def commit_change(temp_repo, user, mail, commit_msg):
 
 def remove_repo(temp_repo):
 	subprocess.call(['rm', '-rf', temp_repo])
-	
 
+def push(temp_repo):
+	args = ['git', 'push', 'origin', 'master']
+	call_command(args, temp_repo)
+	
+def commit_edit(filename, data, user, mail, commit_msg):
+	write_data(settings.REPO_ROOT, filename, data)
+	add_file_to_repo(settings.REPO_ROOT, filename)
+	commit_change(settings.REPO_ROOT, user, mail, commit_msg)
 
 def make_patch(filename, data, user, mail, commit_msg):
 	temp_repo = random_path()
@@ -49,4 +56,3 @@ def make_patch(filename, data, user, mail, commit_msg):
 
 	remove_repo(temp_repo)
 	return out
-
